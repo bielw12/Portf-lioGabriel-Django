@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Portfólio - João Silva{% endblock %}</title>
+    
+    <!-- Meta tags para SEO -->
+    <meta name="description" content="{% block description %}Portfólio de João Silva - Desenvolvedor Full Stack Python/Django{% endblock %}">
+    <meta name="keywords" content="desenvolvedor, python, django, full stack, web development">
+    <meta name="author" content="João Silva">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="{% block og_title %}Portfólio - João Silva{% endblock %}">
+    <meta property="og:description" content="{% block og_description %}Desenvolvedor Full Stack especializado em Python/Django{% endblock %}">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{% load static %}{% static 'css/style.css' %}">
+    
+    {% block extra_head %}{% endblock %}
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <a href="{% url 'home' %}">
+                    <span class="brand-text">João Silva</span>
+                </a>
+            </div>
+            
+            <div class="nav-menu" id="nav-menu">
+                <ul class="nav-list">
+                    <li><a href="{% url 'home' %}" class="nav-link">Início</a></li>
+                    <li><a href="{% url 'about' %}" class="nav-link">Sobre</a></li>
+                    <li><a href="{% url 'projects' %}" class="nav-link">Projetos</a></li>
+                    <li><a href="{% url 'contact' %}" class="nav-link">Contato</a></li>
+                </ul>
+            </div>
+            
+            <div class="nav-toggle" id="nav-toggle">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>João Silva</h3>
+                    <p>Desenvolvedor Full Stack Python/Django</p>
+                    {% if profile %}
+                    <div class="social-links">
+                        {% if profile.github_url %}
+                        <a href="{{ profile.github_url }}" target="_blank" rel="noopener">
+                            <i class="fab fa-github"></i>
+                        </a>
+                        {% endif %}
+                        {% if profile.linkedin_url %}
+                        <a href="{{ profile.linkedin_url }}" target="_blank" rel="noopener">
+                            <i class="fab fa-linkedin"></i>
+                        </a>
+                        {% endif %}
+                        {% if profile.twitter_url %}
+                        <a href="{{ profile.twitter_url }}" target="_blank" rel="noopener">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        {% endif %}
+                    </div>
+                    {% endif %}
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Links Rápidos</h4>
+                    <ul>
+                        <li><a href="{% url 'home' %}">Início</a></li>
+                        <li><a href="{% url 'about' %}">Sobre</a></li>
+                        <li><a href="{% url 'projects' %}">Projetos</a></li>
+                        <li><a href="{% url 'contact' %}">Contato</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h4>Contato</h4>
+                    {% if profile %}
+                    <p><i class="fas fa-envelope"></i> {{ profile.email }}</p>
+                    {% if profile.phone %}
+                    <p><i class="fas fa-phone"></i> {{ profile.phone }}</p>
+                    {% endif %}
+                    {% if profile.location %}
+                    <p><i class="fas fa-map-marker-alt"></i> {{ profile.location }}</p>
+                    {% endif %}
+                    {% endif %}
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; {% now "Y" %} João Silva. Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="{% load static %}{% static 'js/main.js' %}"></script>
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

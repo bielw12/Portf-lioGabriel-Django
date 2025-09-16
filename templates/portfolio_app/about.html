@@ -1,0 +1,176 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Sobre - Portfólio João Silva{% endblock %}
+
+{% block content %}
+<!-- Page Header -->
+<section class="hero" style="min-height: 50vh; padding: 120px 0 60px;">
+    <div class="container">
+        <div class="text-center">
+            <h1>Sobre Mim</h1>
+            <p class="subtitle">Conheça minha trajetória e experiência</p>
+        </div>
+    </div>
+</section>
+
+<!-- About Content -->
+<section class="section">
+    <div class="container">
+        {% if profile %}
+        <div class="grid grid-2" style="align-items: center;">
+            <div>
+                {% if profile.profile_image %}
+                <img src="{{ profile.profile_image.url }}" alt="{{ profile.name }}" 
+                     style="width: 100%; max-width: 400px; border-radius: var(--border-radius); box-shadow: var(--shadow-medium);">
+                {% else %}
+                <img src="/placeholder.svg?height=400&width=400" alt="{{ profile.name }}" 
+                     style="width: 100%; max-width: 400px; border-radius: var(--border-radius); box-shadow: var(--shadow-medium);">
+                {% endif %}
+            </div>
+            
+            <div>
+                <h2>{{ profile.name }}</h2>
+                <h3 class="text-primary mb-3">{{ profile.title }}</h3>
+                <p style="font-size: 1.1rem; line-height: 1.7;">{{ profile.bio }}</p>
+                
+                <div class="mt-4">
+                    <h4>Informações de Contato</h4>
+                    <div style="display: grid; gap: 0.5rem; margin-top: 1rem;">
+                        <p><i class="fas fa-envelope text-primary"></i> {{ profile.email }}</p>
+                        {% if profile.phone %}
+                        <p><i class="fas fa-phone text-primary"></i> {{ profile.phone }}</p>
+                        {% endif %}
+                        {% if profile.location %}
+                        <p><i class="fas fa-map-marker-alt text-primary"></i> {{ profile.location }}</p>
+                        {% endif %}
+                    </div>
+                </div>
+                
+                {% if profile.github_url or profile.linkedin_url or profile.twitter_url or profile.website_url %}
+                <div class="social-links mt-3">
+                    {% if profile.github_url %}
+                    <a href="{{ profile.github_url }}" target="_blank" rel="noopener">
+                        <i class="fab fa-github"></i>
+                    </a>
+                    {% endif %}
+                    {% if profile.linkedin_url %}
+                    <a href="{{ profile.linkedin_url }}" target="_blank" rel="noopener">
+                        <i class="fab fa-linkedin"></i>
+                    </a>
+                    {% endif %}
+                    {% if profile.twitter_url %}
+                    <a href="{{ profile.twitter_url }}" target="_blank" rel="noopener">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    {% endif %}
+                    {% if profile.website_url %}
+                    <a href="{{ profile.website_url }}" target="_blank" rel="noopener">
+                        <i class="fas fa-globe"></i>
+                    </a>
+                    {% endif %}
+                </div>
+                {% endif %}
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</section>
+
+<!-- Experience Section -->
+{% if experiences %}
+<section class="section" style="background-color: var(--background-secondary);">
+    <div class="container">
+        <h2 class="section-title">Experiência Profissional</h2>
+        
+        <div class="timeline">
+            {% for experience in experiences %}
+            <div class="card mb-4">
+                <div class="d-flex justify-content-between align-items-start mb-3">
+                    <div>
+                        <h3>{{ experience.position }}</h3>
+                        <h4 class="text-primary">{{ experience.company }}</h4>
+                    </div>
+                    <div class="text-right">
+                        <span class="tech-tag" style="background-color: {% if experience.current %}var(--secondary-color){% else %}var(--text-secondary){% endif %};">
+                            {{ experience.start_date|date:"M Y" }} - 
+                            {% if experience.current %}
+                            Atual
+                            {% else %}
+                            {{ experience.end_date|date:"M Y" }}
+                            {% endif %}
+                        </span>
+                    </div>
+                </div>
+                
+                <p>{{ experience.description }}</p>
+                
+                {% if experience.company_url %}
+                <a href="{{ experience.company_url }}" target="_blank" class="project-link mt-2">
+                    <i class="fas fa-external-link-alt"></i> Site da Empresa
+                </a>
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- Skills Section -->
+{% if skills %}
+<section class="section">
+    <div class="container">
+        <h2 class="section-title">Habilidades Técnicas</h2>
+        
+        <div class="skills-grid">
+            {% regroup skills by category as skills_by_category %}
+            {% for category in skills_by_category %}
+            <div class="skill-category">
+                <h3>
+                    {% if category.grouper == 'backend' %}
+                    <i class="fas fa-server"></i> Backend
+                    {% elif category.grouper == 'frontend' %}
+                    <i class="fas fa-paint-brush"></i> Frontend
+                    {% elif category.grouper == 'database' %}
+                    <i class="fas fa-database"></i> Banco de Dados
+                    {% elif category.grouper == 'tools' %}
+                    <i class="fas fa-tools"></i> Ferramentas
+                    {% else %}
+                    <i class="fas fa-code"></i> Outros
+                    {% endif %}
+                </h3>
+                
+                {% for skill in category.list %}
+                <div class="skill-item">
+                    <div class="skill-name">
+                        {% if skill.icon %}
+                        <i class="{{ skill.icon }}"></i>
+                        {% endif %}
+                        <span>{{ skill.name }}</span>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-progress" style="width: {{ skill.proficiency }}%"></div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- CTA Section -->
+<section class="section" style="background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)); color: white;">
+    <div class="container text-center">
+        <h2>Interessado em trabalhar comigo?</h2>
+        <p style="font-size: 1.1rem; margin-bottom: 2rem; opacity: 0.9;">
+            Estou sempre aberto a novos desafios e oportunidades interessantes.
+        </p>
+        <a href="{% url 'contact' %}" class="btn" style="background-color: white; color: var(--primary-color);">
+            Vamos Conversar
+        </a>
+    </div>
+</section>
+{% endblock %}

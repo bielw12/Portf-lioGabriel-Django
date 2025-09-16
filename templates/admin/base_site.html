@@ -1,0 +1,62 @@
+{% extends "admin/base.html" %}
+
+{% block title %}{% if subtitle %}{{ subtitle }} | {% endif %}{{ title }} | Portfólio Admin{% endblock %}
+
+{% block branding %}
+<h1 id="site-name">
+    <a href="{% url 'admin:index' %}">
+        <strong>Portfólio</strong> Administração
+    </a>
+</h1>
+{% endblock %}
+
+{% block nav-global %}
+<div style="float: right; margin-top: 10px;">
+    <a href="/" target="_blank" style="color: #fff; text-decoration: none; margin-right: 15px;">
+        📱 Ver Site
+    </a>
+    {% if user.is_authenticated %}
+        <span style="color: #fff;">Olá, {{ user.first_name|default:user.username }}!</span>
+    {% endif %}
+</div>
+{% endblock %}
+
+{% block extrahead %}
+{{ block.super }}
+<style>
+    #header {
+        background: linear-gradient(135deg, #059669 0%, #10b981 100%);
+    }
+    
+    .module h2, .module caption, .inline-group h2 {
+        background: #059669;
+    }
+    
+    .button, input[type=submit], input[type=button], .submit-row input, a.button {
+        background: #059669;
+        border-color: #059669;
+    }
+    
+    .button:hover, input[type=submit]:hover, input[type=button]:hover, .submit-row input:hover, a.button:hover {
+        background: #047857;
+        border-color: #047857;
+    }
+    
+    .selector-chosen h2 {
+        background: #10b981;
+    }
+    
+    a:link, a:visited {
+        color: #059669;
+    }
+    
+    .breadcrumbs {
+        background: #f1f5f9;
+        border-bottom: 1px solid #e5e7eb;
+    }
+    
+    .breadcrumbs a {
+        color: #059669;
+    }
+</style>
+{% endblock %}

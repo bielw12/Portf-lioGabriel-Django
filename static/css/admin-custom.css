@@ -1,0 +1,51 @@
+/* Custom admin styles */
+.admin-custom {
+  font-family: "DM Sans", sans-serif;
+}
+
+.admin-dashboard {
+  background: linear-gradient(135deg, #f1f5f9 0%, #ffffff 100%);
+  padding: 20px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+.admin-quick-links {
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+  margin-top: 15px;
+}
+
+.admin-quick-link {
+  background: #059669;
+  color: white;
+  padding: 8px 16px;
+  text-decoration: none;
+  border-radius: 4px;
+  font-size: 14px;
+  transition: all 0.3s ease;
+}
+
+.admin-quick-link:hover {
+  background: #047857;
+  transform: translateY(-1px);
+}
+
+.admin-tips {
+  margin-top: 30px;
+  padding: 20px;
+  background: #f8fafc;
+  border-radius: 8px;
+  border-left: 4px solid #059669;
+}
+
+.admin-tips h3 {
+  color: #059669;
+  margin-bottom: 10px;
+}
+
+.admin-tips ul {
+  color: #475569;
+  line-height: 1.6;
+}

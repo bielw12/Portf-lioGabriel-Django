@@ -1,0 +1,208 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Contato - Portfólio João Silva{% endblock %}
+
+{% block content %}
+<!-- Page Header -->
+<section class="hero" style="min-height: 50vh; padding: 120px 0 60px;">
+    <div class="container">
+        <div class="text-center">
+            <h1>Entre em Contato</h1>
+            <p class="subtitle">Vamos conversar sobre seu próximo projeto</p>
+        </div>
+    </div>
+</section>
+
+<!-- Contact Section -->
+<section class="section">
+    <div class="container">
+        <div class="grid grid-2" style="align-items: start;">
+            <!-- Contact Form -->
+            <div class="contact-form">
+                <div class="card">
+                    <h3>Envie uma Mensagem</h3>
+                    
+                    {% if messages %}
+                    <div class="messages">
+                        {% for message in messages %}
+                        <div class="alert alert-{{ message.tags }}">
+                            {{ message }}
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                    
+                    <form method="post">
+                        {% csrf_token %}
+                        
+                        <div class="form-group">
+                            <label for="{{ form.name.id_for_label }}" class="form-label">
+                                {{ form.name.label }}
+                            </label>
+                            {{ form.name }}
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="{{ form.email.id_for_label }}" class="form-label">
+                                {{ form.email.label }}
+                            </label>
+                            {{ form.email }}
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="{{ form.subject.id_for_label }}" class="form-label">
+                                {{ form.subject.label }}
+                            </label>
+                            {{ form.subject }}
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="{{ form.message.id_for_label }}" class="form-label">
+                                {{ form.message.label }}
+                            </label>
+                            {{ form.message }}
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary" style="width: 100%;">
+                            <i class="fas fa-paper-plane"></i> Enviar Mensagem
+                        </button>
+                    </form>
+                </div>
+            </div>
+            
+            <!-- Contact Info -->
+            <div>
+                <div class="card">
+                    <h3>Informações de Contato</h3>
+                    
+                    {% if profile %}
+                    <div style="display: grid; gap: 1.5rem; margin-top: 1.5rem;">
+                        <div class="d-flex align-items-center" style="gap: 1rem;">
+                            <div style="width: 50px; height: 50px; background-color: var(--primary-color); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white;">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <div>
+                                <h4 style="margin-bottom: 0.25rem;">E-mail</h4>
+                                <p style="margin: 0; color: var(--text-secondary);">{{ profile.email }}</p>
+                            </div>
+                        </div>
+                        
+                        {% if profile.phone %}
+                        <div class="d-flex align-items-center" style="gap: 1rem;">
+                            <div style="width: 50px; height: 50px; background-color: var(--secondary-color); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white;">
+                                <i class="fas fa-phone"></i>
+                            </div>
+                            <div>
+                                <h4 style="margin-bottom: 0.25rem;">Telefone</h4>
+                                <p style="margin: 0; color: var(--text-secondary);">{{ profile.phone }}</p>
+                            </div>
+                        </div>
+                        {% endif %}
+                        
+                        {% if profile.location %}
+                        <div class="d-flex align-items-center" style="gap: 1rem;">
+                            <div style="width: 50px; height: 50px; background-color: var(--accent-color); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white;">
+                                <i class="fas fa-map-marker-alt"></i>
+                            </div>
+                            <div>
+                                <h4 style="margin-bottom: 0.25rem;">Localização</h4>
+                                <p style="margin: 0; color: var(--text-secondary);">{{ profile.location }}</p>
+                            </div>
+                        </div>
+                        {% endif %}
+                    </div>
+                    
+                    {% if profile.github_url or profile.linkedin_url or profile.twitter_url %}
+                    <div class="mt-4">
+                        <h4>Redes Sociais</h4>
+                        <div class="social-links mt-2">
+                            {% if profile.github_url %}
+                            <a href="{{ profile.github_url }}" target="_blank" rel="noopener">
+                                <i class="fab fa-github"></i>
+                            </a>
+                            {% endif %}
+                            {% if profile.linkedin_url %}
+                            <a href="{{ profile.linkedin_url }}" target="_blank" rel="noopener">
+                                <i class="fab fa-linkedin"></i>
+                            </a>
+                            {% endif %}
+                            {% if profile.twitter_url %}
+                            <a href="{{ profile.twitter_url }}" target="_blank" rel="noopener">
+                                <i class="fab fa-twitter"></i>
+                            </a>
+                            {% endif %}
+                        </div>
+                    </div>
+                    {% endif %}
+                    {% endif %}
+                </div>
+                
+                <!-- Quick Response Info -->
+                <div class="card mt-4">
+                    <h4>Tempo de Resposta</h4>
+                    <p>Normalmente respondo em até <strong>24 horas</strong> durante dias úteis.</p>
+                    
+                    <h4 class="mt-3">Disponibilidade</h4>
+                    <p>Segunda a Sexta: 9h às 18h<br>
+                    Sábado: 9h às 12h<br>
+                    Domingo: Indisponível</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- FAQ Section -->
+<section class="section" style="background-color: var(--background-secondary);">
+    <div class="container">
+        <h2 class="section-title">Perguntas Frequentes</h2>
+        
+        <div class="grid grid-2">
+            <div class="card">
+                <h4>Qual é o prazo médio para um projeto?</h4>
+                <p>O prazo varia conforme a complexidade, mas projetos médios levam entre 2-6 semanas para conclusão.</p>
+            </div>
+            
+            <div class="card">
+                <h4>Trabalha com projetos remotos?</h4>
+                <p>Sim! Trabalho com clientes de todo o Brasil e também internacionalmente de forma 100% remota.</p>
+            </div>
+            
+            <div class="card">
+                <h4>Oferece suporte pós-entrega?</h4>
+                <p>Sim, ofereço 30 dias de suporte gratuito para correções e 3 meses de suporte técnico.</p>
+            </div>
+            
+            <div class="card">
+                <h4>Quais tecnologias utiliza?</h4>
+                <p>Especializado em Python/Django, mas também trabalho com React, PostgreSQL, Docker e AWS.</p>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+// Form enhancement
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.querySelector('.contact-form form');
+    const submitBtn = form.querySelector('button[type="submit"]');
+    
+    form.addEventListener('submit', function() {
+        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Enviando...';
+        submitBtn.disabled = true;
+    });
+    
+    // Auto-resize textarea
+    const textarea = form.querySelector('textarea');
+    if (textarea) {
+        textarea.addEventListener('input', function() {
+            this.style.height = 'auto';
+            this.style.height = this.scrollHeight + 'px';
+        });
+    }
+});
+</script>
+{% endblock %}

@@ -1,0 +1,210 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Início - Portfólio João Silva{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero">
+    <div class="container">
+        <div class="hero-content">
+            <div class="hero-text">
+                {% if profile %}
+                <h1>Olá, eu sou {{ profile.name }}</h1>
+                <p class="subtitle">{{ profile.title }}</p>
+                <p class="description">{{ profile.bio|truncatewords:30 }}</p>
+                {% else %}
+                <h1>Olá, eu sou João Silva</h1>
+                <p class="subtitle">Desenvolvedor Full Stack Python/Django</p>
+                <p class="description">Desenvolvedor apaixonado por tecnologia com experiência em criar soluções web inovadoras.</p>
+                {% endif %}
+                
+                <div class="hero-buttons">
+                    <a href="{% url 'projects' %}" class="btn btn-primary">Ver Projetos</a>
+                    <a href="{% url 'contact' %}" class="btn btn-secondary">Entre em Contato</a>
+                </div>
+            </div>
+            
+            <div class="hero-image">
+                {% if profile and profile.profile_image %}
+                <img src="{{ profile.profile_image.url }}" alt="{{ profile.name }}" class="profile-image">
+                {% else %}
+                <img src="/placeholder.svg?height=300&width=300" alt="João Silva" class="profile-image">
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Featured Projects Section -->
+<section class="section">
+    <div class="container">
+        <h2 class="section-title">Projetos em Destaque</h2>
+        
+        {% if featured_projects %}
+        <div class="grid grid-3">
+            {% for project in featured_projects %}
+            <div class="project-card">
+                {% if project.image %}
+                <img src="{{ project.image.url }}" alt="{{ project.title }}" class="project-image">
+                {% else %}
+                <img src="/placeholder.svg?height=200&width=400" alt="{{ project.title }}" class="project-image">
+                {% endif %}
+                
+                <div class="project-content">
+                    <h3 class="project-title">{{ project.title }}</h3>
+                    <p class="project-description">{{ project.short_description }}</p>
+                    
+                    <div class="project-tech">
+                        {% for tech in project.get_technologies_list %}
+                        <span class="tech-tag">{{ tech }}</span>
+                        {% endfor %}
+                    </div>
+                    
+                    <div class="project-links">
+                        {% if project.demo_url %}
+                        <a href="{{ project.demo_url }}" target="_blank" class="project-link">
+                            <i class="fas fa-external-link-alt"></i> Demo
+                        </a>
+                        {% endif %}
+                        {% if project.github_url %}
+                        <a href="{{ project.github_url }}" target="_blank" class="project-link">
+                            <i class="fab fa-github"></i> Código
+                        </a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        
+        <div class="text-center mt-4">
+            <a href="{% url 'projects' %}" class="btn btn-primary">Ver Todos os Projetos</a>
+        </div>
+        {% else %}
+        <div class="text-center">
+            <p class="text-secondary">Nenhum projeto em destaque encontrado.</p>
+        </div>
+        {% endif %}
+    </div>
+</section>
+
+<!-- Skills Section -->
+<section class="section" style="background-color: var(--background-secondary);">
+    <div class="container">
+        <h2 class="section-title">Habilidades Técnicas</h2>
+        
+        {% if skills_by_category %}
+        <div class="skills-grid">
+            {% for category, skills in skills_by_category.items %}
+            <div class="skill-category">
+                <h3>
+                    {% if category == 'backend' %}
+                    <i class="fas fa-server"></i> Backend
+                    {% elif category == 'frontend' %}
+                    <i class="fas fa-paint-brush"></i> Frontend
+                    {% elif category == 'database' %}
+                    <i class="fas fa-database"></i> Banco de Dados
+                    {% elif category == 'tools' %}
+                    <i class="fas fa-tools"></i> Ferramentas
+                    {% else %}
+                    <i class="fas fa-code"></i> Outros
+                    {% endif %}
+                </h3>
+                
+                {% for skill in skills %}
+                <div class="skill-item">
+                    <div class="skill-name">
+                        {% if skill.icon %}
+                        <i class="{{ skill.icon }}"></i>
+                        {% endif %}
+                        <span>{{ skill.name }}</span>
+                    </div>
+                    <div class="skill-bar">
+                        <div class="skill-progress" style="width: {{ skill.proficiency }}%"></div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="text-center">
+            <p class="text-secondary">Habilidades serão adicionadas em breve.</p>
+        </div>
+        {% endif %}
+    </div>
+</section>
+
+<!-- Experience Section -->
+{% if experiences %}
+<section class="section">
+    <div class="container">
+        <h2 class="section-title">Experiência Profissional</h2>
+        
+        <div class="grid grid-2">
+            {% for experience in experiences %}
+            <div class="card">
+                <h3>{{ experience.position }}</h3>
+                <h4 class="text-primary">{{ experience.company }}</h4>
+                <p class="text-secondary mb-2">
+                    {{ experience.start_date|date:"M Y" }} - 
+                    {% if experience.current %}
+                    Atual
+                    {% else %}
+                    {{ experience.end_date|date:"M Y" }}
+                    {% endif %}
+                </p>
+                <p>{{ experience.description|truncatewords:25 }}</p>
+                {% if experience.company_url %}
+                <a href="{{ experience.company_url }}" target="_blank" class="project-link mt-2">
+                    <i class="fas fa-external-link-alt"></i> Site da Empresa
+                </a>
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+        
+        <div class="text-center mt-4">
+            <a href="{% url 'about' %}" class="btn btn-secondary">Ver Experiência Completa</a>
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- CTA Section -->
+<section class="section" style="background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)); color: white;">
+    <div class="container text-center">
+        <h2>Vamos Trabalhar Juntos?</h2>
+        <p style="font-size: 1.1rem; margin-bottom: 2rem; opacity: 0.9;">
+            Estou sempre aberto a novos desafios e oportunidades interessantes.
+        </p>
+        <a href="{% url 'contact' %}" class="btn" style="background-color: white; color: var(--primary-color);">
+            Entre em Contato
+        </a>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+// Animate skill bars when they come into view
+document.addEventListener('DOMContentLoaded', function() {
+    const skillBars = document.querySelectorAll('.skill-progress');
+    
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const width = entry.target.style.width;
+                entry.target.style.width = '0%';
+                setTimeout(() => {
+                    entry.target.style.width = width;
+                }, 100);
+            }
+        });
+    });
+    
+    skillBars.forEach(bar => observer.observe(bar));
+});
+</script>
+{% endblock %}

@@ -1,0 +1,110 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ project.title }} - Portfólio João Silva{% endblock %}
+
+{% block content %}
+<!-- Project Header -->
+<section class="hero" style="min-height: 50vh; padding: 120px 0 60px;">
+    <div class="container">
+        <div class="text-center">
+            <h1>{{ project.title }}</h1>
+            <p class="subtitle">{{ project.short_description }}</p>
+            
+            <div class="hero-buttons mt-3">
+                {% if project.demo_url %}
+                <a href="{{ project.demo_url }}" target="_blank" class="btn btn-primary">
+                    <i class="fas fa-external-link-alt"></i> Ver Demo
+                </a>
+                {% endif %}
+                {% if project.github_url %}
+                <a href="{{ project.github_url }}" target="_blank" class="btn btn-secondary">
+                    <i class="fab fa-github"></i> Ver Código
+                </a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Project Details -->
+<section class="section">
+    <div class="container">
+        <div class="grid grid-2" style="align-items: start;">
+            <!-- Project Image -->
+            <div>
+                {% if project.image %}
+                <img src="{{ project.image.url }}" alt="{{ project.title }}" 
+                     style="width: 100%; border-radius: var(--border-radius); box-shadow: var(--shadow-medium);">
+                {% else %}
+                <img src="/placeholder.svg?height=400&width=600" alt="{{ project.title }}" 
+                     style="width: 100%; border-radius: var(--border-radius); box-shadow: var(--shadow-medium);">
+                {% endif %}
+            </div>
+            
+            <!-- Project Info -->
+            <div>
+                <div class="card">
+                    <h3>Sobre o Projeto</h3>
+                    <p>{{ project.description|linebreaks }}</p>
+                    
+                    <div class="mt-4">
+                        <h4>Tecnologias Utilizadas</h4>
+                        <div class="project-tech mt-2">
+                            {% for tech in project.get_technologies_list %}
+                            <span class="tech-tag">{{ tech }}</span>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    
+                    <div class="mt-4">
+                        <h4>Informações do Projeto</h4>
+                        <div style="display: grid; gap: 0.5rem; margin-top: 1rem;">
+                            <p><strong>Status:</strong> 
+                                <span class="tech-tag" style="background-color: 
+                                    {% if project.status == 'completed' %}var(--secondary-color)
+                                    {% elif project.status == 'in_progress' %}#f59e0b
+                                    {% else %}var(--text-secondary){% endif %};">
+                                    {{ project.get_status_display }}
+                                </span>
+                            </p>
+                            <p><strong>Início:</strong> {{ project.start_date|date:"d/m/Y" }}</p>
+                            {% if project.end_date %}
+                            <p><strong>Conclusão:</strong> {{ project.end_date|date:"d/m/Y" }}</p>
+                            {% endif %}
+                            {% if project.featured %}
+                            <p><strong>Projeto em Destaque</strong> ⭐</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                    
+                    <div class="project-links mt-4">
+                        {% if project.demo_url %}
+                        <a href="{{ project.demo_url }}" target="_blank" class="btn btn-primary">
+                            <i class="fas fa-external-link-alt"></i> Ver Demo
+                        </a>
+                        {% endif %}
+                        {% if project.github_url %}
+                        <a href="{{ project.github_url }}" target="_blank" class="btn btn-secondary">
+                            <i class="fab fa-github"></i> Ver Código
+                        </a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Navigation -->
+<section class="section" style="background-color: var(--background-secondary);">
+    <div class="container text-center">
+        <a href="{% url 'projects' %}" class="btn btn-primary">
+            <i class="fas fa-arrow-left"></i> Voltar aos Projetos
+        </a>
+        <a href="{% url 'contact' %}" class="btn btn-secondary">
+            <i class="fas fa-envelope"></i> Interessado? Entre em Contato
+        </a>
+    </div>
+</section>
+{% endblock %}

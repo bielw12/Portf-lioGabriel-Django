@@ -1,0 +1,39 @@
+{% extends "admin/index.html" %}
+{% load i18n static %}
+
+{% block content %}
+<div style="background: linear-gradient(135deg, #f1f5f9 0%, #ffffff 100%); padding: 20px; border-radius: 8px; margin-bottom: 20px;">
+    <h2 style="color: #059669; margin-bottom: 10px;">🎯 Bem-vindo ao Painel do Portfólio!</h2>
+    <p style="color: #475569; margin-bottom: 15px;">
+        Gerencie todo o conteúdo do seu portfólio de forma fácil e intuitiva. 
+        Use as seções abaixo para atualizar seus projetos, habilidades e informações pessoais.
+    </p>
+    
+    <div style="display: flex; gap: 15px; flex-wrap: wrap;">
+        <a href="/admin/portfolio_app/project/" style="background: #059669; color: white; padding: 8px 16px; text-decoration: none; border-radius: 4px; font-size: 14px;">
+            📁 Gerenciar Projetos
+        </a>
+        <a href="/admin/portfolio_app/skill/" style="background: #10b981; color: white; padding: 8px 16px; text-decoration: none; border-radius: 4px; font-size: 14px;">
+            🛠️ Gerenciar Habilidades
+        </a>
+        <a href="/admin/portfolio_app/contact/" style="background: #475569; color: white; padding: 8px 16px; text-decoration: none; border-radius: 4px; font-size: 14px;">
+            📧 Ver Mensagens
+        </a>
+        <a href="/" target="_blank" style="background: #6b7280; color: white; padding: 8px 16px; text-decoration: none; border-radius: 4px; font-size: 14px;">
+            🌐 Ver Site
+        </a>
+    </div>
+</div>
+
+{{ block.super }}
+
+<div style="margin-top: 30px; padding: 20px; background: #f8fafc; border-radius: 8px; border-left: 4px solid #059669;">
+    <h3 style="color: #059669; margin-bottom: 10px;">💡 Dicas Rápidas:</h3>
+    <ul style="color: #475569; line-height: 1.6;">
+        <li><strong>Projetos em Destaque:</strong> Marque até 3 projetos como "featured" para aparecerem na página inicial</li>
+        <li><strong>Ordem de Exibição:</strong> Use o campo "ordem" para controlar a sequência dos itens</li>
+        <li><strong>Imagens:</strong> Faça upload de imagens para projetos e perfil na pasta media/</li>
+        <li><strong>Mensagens:</strong> Verifique regularmente as mensagens de contato recebidas</li>
+    </ul>
+</div>
+{% endblock %}
